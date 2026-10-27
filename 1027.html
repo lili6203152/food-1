@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 輔助全端程式設計 - 專業人才培訓班（教學模擬版）</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- 自訂黃綠色系佈局與樣式 -->
+    <style>
+        :root {
+            --bs-primary: #52B788;         /* 主色：清新翠綠 */
+            --bs-primary-rgb: 82, 183, 136;
+            --bs-success: #2D6A4F;         /* 深綠色系 */
+            --bs-warning: #D4A373;         /* 點綴黃土色/暖黃 */
+            --bs-light-yellow: #FEFAE0;    /* 淺奶油黃背景 */
+            --bs-accent-yellow: #FAEDCD;   /* 區塊淡黃色 */
+        }
+
+        body {
+            background-color: var(--bs-light-yellow);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #2b2b2b;
+        }
+
+        /* 導覽列風格 */
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Banner 風格 */
+        .hero-banner {
+            background: linear-gradient(135deg, #2D6A4F 0%, #52B788 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* 區塊卡片化與黃綠色階 */
+        .form-section-card {
+            background-color: #ffffff;
+            border: 1px solid #e9edc9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(82, 183, 136, 0.08);
+        }
+
+        .form-section-card h4 {
+            color: #2D6A4F;
+            border-bottom: 2px solid #D4A373;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.25rem;
+            font-size: 1.15rem;
+            font-weight: bold;
+        }
+
+        /* 右側特色與提醒卡片 */
+        .sidebar-card {
+            background-color: #ffffff;
+            border-left: 4px solid #52B788;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        /* 按鈕樣式 */
+        .btn-primary {
+            background-color: #52B788;
+            border-color: #52B788;
+        }
+        .btn-primary:hover {
+            background-color: #40916c;
+            border-color: #40916c;
+        }
+        .btn-outline-secondary {
+            color: #2D6A4F;
+            border-color: #D4A373;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #D4A373;
+            color: #fff;
+        }
+
+        footer {
+            background-color: #2b2b2b;
+            color: #adb5bd;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 品牌導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand text-success fw-bold" href="#">
+                <span class="bg-success text-white px-2 py-1 rounded me-1">巨匠</span>AI 程式教育學院 <span class="badge bg-warning text-dark fs-6 ms-2">教學模擬版</span>
+            </a>
+            <span class="navbar-text text-light small d-none d-md-inline">
+                會員登入 / 專業線上報名系統
+            </span>
+        </div>
+    </nav>
+
+    <!-- 2. 主容器 -->
+    <div class="container my-4">
+        
+        <!-- AI 課程介紹 Banner -->
+        <div class="hero-banner text-center text-md-start row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-warning text-dark mb-2">熱門招生中</span>
+                <h1 class="fw-bold display-6">AI 輔助全端程式設計培訓</h1>
+                <p class="lead mt-2 mb-0">從 HTML/CSS、JavaScript 到 AI 協作開發，零基礎也能無痛轉職，打造即戰力！</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <span class="d-block small text-light">模擬專案代號：FE-2026-X</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- 左側：線上報名表 (col-lg-8) -->
+            <div class="col-lg-8">
+                <form id="registrationForm" novalidate>
+                    
+                    <!-- 區塊 1：個人基本資料 -->
+                    <div class="form-section-card">
+                        <h4>1. 個人基本資料</h4>
+                        
+                        <div class="mb-3">
+                            <label for="memberName" class="form-label fw-bold">姓名 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="memberName" name="memberName" placeholder="請輸入 2～8 字真實姓名" required>
+                            <div class="invalid-feedback">姓名長度需介於 2 到 8 個字之間。</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="birthYear" class="form-label fw-bold">出生年（西元） <span class="text-danger">*</span></label>
+                                <select class="form-select" id="birthYear" name="birthYear" required>
+                                    <option value="">請選擇出生年份</option>
+                                    <!-- JS 動態帶入 1950-2010 -->
+                                </select>
+                                <div class="invalid-feedback">請選擇出生年份。</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold d-block">性別 <span class="text-danger">*</span></label>
+                                <div class="form-check form-check-inline mt-1">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderM" value="男" required>
+                                    <label class="form-check-label" for="genderM">男</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderF" value="女">
+                                    <label class="form-check-label" for="genderF">女</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderO" value="保留">
+                                    <label class="form-check-label" for="genderO">保留</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="citySelect" class="form-label fw-bold">居住區（台灣 19 縣市） <span class="text-danger">*</span></label>
+                                <select class="form-select" id="citySelect" name="citySelect" required>
+                                    <option value="">載入中...</option>
+                                </select>
+                                <div class="invalid-feedback">請選擇居住縣市。</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label fw-bold">聯繫電話（10碼） <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="例如：0912345678" maxlength="10" required>
+                                <div class="invalid-feedback">請輸入正確的 10 碼台灣手機格式（例：09開頭共10碼）。</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="memberEmail" class="form-label fw-bold">電子郵件 (Email) <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="memberEmail" name="memberEmail" placeholder="name@example.com" required>
+                                <div class="invalid-feedback">請輸入有效的 Email 格式。</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="memberPassword" class="form-label fw-bold">設定密碼（8～16字） <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="memberPassword" name="memberPassword" placeholder="8至16字元密碼" maxlength="16" required>
+                                <div class="invalid-feedback">密碼長度需為 8 至 16 個字元。</div>
+                                <div class="form-text text-muted small">（註：基於資安考量，密碼不存入 LocalStorage）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 區塊 2：管道與動機 -->
+                    <div class="form-section-card">
+                        <h4>2. 參訓背景與動機</h4>
+                        
+                        <div class="mb-3">
+                            <label for="channel" class="form-label fw-bold">參訓資訊來源 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="channel" name="channel" required>
+                                <option value="">請選擇來源</option>
+                                <option value="臉書">臉書</option>
+                                <option value="IG">IG</option>
+                                <option value="政府單位">政府單位</option>
+                                <option value="親友介紹">親友介紹</option>
+                            </select>
+                            <div class="invalid-feedback">請選擇參訓資訊來源。</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="motivation" class="form-label fw-bold">參訓動機 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="motivation" name="motivation" required>
+                                <option value="">請選擇主要動機</option>
+                                <option value="增加第二專長">增加第二專長</option>
+                                <option value="興趣">興趣</option>
+                                <option value="轉職預備">轉職預備</option>
+                                <option value="打發時間">打發時間</option>
+                            </select>
+                            <div class="invalid-feedback">請選擇參訓動機。</div>
+                        </div>
+                    </div>
+
+                    <!-- 區塊 3：身分別確認 -->
+                    <div class="form-section-card">
+                        <h4>3. 身分別確認</h4>
+                        <div class="mb-3">
+                            <label for="identityType" class="form-label fw-bold">特殊身分別（選填）</label>
+                            <select class="form-select" id="identityType" name="identityType">
+                                <option value="">一般身分 / 無特殊身分</option>
+                                <option value="長期失業">長期失業</option>
+                                <option value="非自願離職">非自願離職</option>
+                                <option value="負擔家計婦女">負擔家計婦女</option>
+                                <option value="中高齡">中高齡</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 區塊 4：課程偏好與時間 -->
+                    <div class="form-section-card">
+                        <h4>4. 課程偏好與時間</h4>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold d-block">期待學習課程（可複選，至少選一項） <span class="text-danger">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input course-chk" type="checkbox" name="courses" value="HTML/CSS" id="course1">
+                                        <label class="form-check-label" for="course1">HTML/CSS 網頁設計</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input course-chk" type="checkbox" name="courses" value="JavaScript" id="course2">
+                                        <label class="form-check-label" for="course2">JavaScript 互動開發</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input course-chk" type="checkbox" name="courses" value="Python" id="course3">
+                                        <label class="form-check-label" for="course3">Python 程式設計</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input course-chk" type="checkbox" name="courses" value="AI協作開發" id="course4">
+                                        <label class="form-check-label" for="course4">AI 協作開發實戰</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="courseError" class="text-danger small mt-1" style="display: none;">請至少勾選一項期待學習的課程。</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold d-block">偏好的上課方式 <span class="text-danger">*</span></label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="studyMode" id="modeOnline" value="線上學習" required>
+                                <label class="form-check-label" for="modeOnline">線上學習</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="studyMode" id="modeClassroom" value="到教室上課學習">
+                                <label class="form-check-label" for="modeClassroom">到教室上課學習</label>
+                            </div>
+                            <div class="invalid-feedback">請選擇偏好的上課方式。</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="studyTime" class="form-label fw-bold">期待上課時間 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="studyTime" name="studyTime" required>
+                                <option value="">請選擇時間時段</option>
+                                <option value="周一到週五 19:00-21:00">周一到週五 19:00-21:00</option>
+                                <option value="周六日 全日">周六日 全日</option>
+                                <option value="都可">都可</option>
+                            </select>
+                            <div class="invalid-feedback">請選擇期待上課時間。</div>
+                        </div>
+
+                        <!-- 額外補充：能力自評 Range 與 Switch -->
+                        <div class="row">
+                            <div class="col-md-7 mb-3">
+                                <label for="skillRange" class="form-label fw-bold">程式能力自評 (1～10分)：<span id="rangeValue" class="text-success fw-bold">5</span> 分</label>
+                                <input type="range" class="form-range" min="1" max="10" value="5" id="skillRange" name="skillRange">
+                            </div>
+                            <div class="col-md-5 mb-3 d-flex align-items-center">
+                                <div class="form-check form-switch mt-3">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="receiveInfo" name="receiveInfo" checked>
+                                    <label class="form-check-label fw-bold ms-2" for="receiveInfo">接收最新課程資訊</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- 按鈕區 -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="btnReset">重新填寫</button>
+                        <button type="submit" class="btn btn-primary btn-lg px-5 text-white fw-bold">確認送出報名</button>
+                    </div>
+
+                </form>
+
+                <!-- 報名資料確認預覽區 -->
+                <div class="card border-success shadow-sm mb-5" id="previewCard" style="display: none;">
+                    <div class="card-header bg-success text-white fw-bold">
+                        📋 報名資料確認預覽
+                    </div>
+                    <div class="card-body bg-white">
+                        <ul class="list-group list-group-flush" id="previewList">
+                            <!-- JS 動態填入預覽內容 -->
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 右側：課程特色與提醒 (col-lg-4) -->
+            <div class="col-lg-4">
+                <div class="sidebar-card">
+                    <h5 class="fw-bold text-success mb-3">💡 課程四大優勢</h5>
+                    <ul class="list-unstyled mb-0 small text-muted">
+                        <li class="mb-2">✅ <strong>實戰導向</strong>：專為轉職與技能提升打造。</li>
+                        <li class="mb-2">✅ <strong>AI 工具輔導</strong>：學會運用 AI 提升 50% 寫扣效率。</li>
+                        <li class="mb-2">✅ <strong>彈性學習</strong>：支援線上與實體教室雙軌並行。</li>
+                        <li class="mb-0">✅ <strong>師資手把手</strong>：業界資深工程師親自指導。</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h5 class="fw-bold text-success mb-3">📌 填寫注意事項</h5>
+                    <p class="small text-muted mb-2">1. 聯絡電話請填寫真實有效之 10 碼台灣手機。</p>
+                    <p class="small text-muted mb-2">2. 表單具備<strong>草稿自動暫存功能</strong>，重新整理頁面資料不遺失。</p>
+                    <p class="small text-muted mb-0">3. 本系統為教學模擬版，資料僅供前端驗證與檢視預覽使用。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1">© 2026 AI 程式教育學院・教學模擬網站</p>
+            <p class="small text-secondary mb-0">本站僅供前端技術展示與教學使用，不代表官方正式授權</p>
+        </div>
+    </footer>
+
+    <!-- JS 引入區 -->
+    <script src="js/jquery-4.0.0.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            // 1. 動態產生出生年份 (1950 - 2010)
+            const currentYearNum = 2010;
+            let yearOptions = '<option value="">請選擇出生年份</option>';
+            for (let y = 2010; y >= 1950; y--) {
+                yearOptions += `<option value="${y}">${y} 年</option>`;
+            }
+            $('#birthYear').html(yearOptions);
+
+            // 2. 透過 AJAX 讀取縣市 JSON
+            let cityLoadedFlag = false;
+            $.ajax({
+                url: 'js/json/CityCountyData.json',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    let cityOptions = '<option value="">請選擇居住縣市</option>';
+                    // 兼容不同 JSON 結構格式
+                    let cities = Array.isArray(data) ? data : (data.cities || data.CityList || Object.values(data)[0]);
+                    if (cities) {
+                        cities.forEach(function(item) {
+                            let cityName = item.CityName || item.name || item;
+                            cityOptions += `<option value="${cityName}">${cityName}</option>`;
+                        });
+                    }
+                    $('#citySelect').html(cityOptions);
+                    cityLoadedFlag = true;
+
+                    // 縣市載入完成後，執行 LocalStorage 還原
+                    restoreFormData();
+                },
+                error: function() {
+                    // 若讀取失敗，提供備用預設台灣 19/22 縣市供測試
+                    const fallbackCities = ["基隆市", "台北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣", "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "台東縣"];
+                    let cityOptions = '<option value="">請選擇居住縣市</option>';
+                    fallbackCities.forEach(function(c) {
+                        cityOptions += `<option value="${c}">${c}</option>`;
+                    });
+                    $('#citySelect').html(cityOptions);
+                    cityLoadedFlag = true;
+                    restoreFormData();
+                }
+            });
+
+            // 3. Range 即時數值更新
+            $('#skillRange').on('input', function() {
+                $('#rangeValue').text($(this).val());
+                saveFormData();
+            });
+
+            // 4. 即時輸入驗證與自動暫存監聽
+            $('#registrationForm input, #registrationForm select').on('input change', function() {
+                // 個別欄位即時驗證示範
+                if (this.id === 'memberName') {
+                    let val = $(this).val().trim();
+                    if (val.length >= 2 && val.length <= 8) {
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                }
+                if (this.id === 'phone') {
+                    let phoneRegex = /^09\d{8}$/;
+                    if (phoneRegex.test($(this).val())) {
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                }
+                if (this.id === 'memberEmail') {
+                    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (emailRegex.test($(this).val())) {
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                }
+                if (this.id === 'memberPassword') {
+                    let pVal = $(this).val();
+                    if (pVal.length >= 8 && pVal.length <= 16) {
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                }
+                if (this.tagName === 'SELECT' && $(this).val() !== '') {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+
+                // 儲存至 LocalStorage 草稿
+                saveFormData();
+            });
+
+            // Checkbox 點擊也觸發暫存
+            $('.course-chk').on('change', function() {
+                saveFormData();
+            });
+
+            // 5. LocalStorage 暫存函式
+            function saveFormData() {
+                let formData = {
+                    memberName: $('#memberName').val(),
+                    birthYear: $('#birthYear').val(),
+                    gender: $('input[name="gender"]:checked').val() || '',
+                    citySelect: $('#citySelect').val(),
+                    phone: $('#phone').val(),
+                    memberEmail: $('#memberEmail').val(),
+                    // 密碼不存入 LocalStorage
+                    channel: $('#channel').val(),
+                    motivation: $('#motivation').val(),
+                    identityType: $('#identityType').val(),
+                    courses: $('.course-chk:checked').map(function() { return this.value; }).get(),
+                    studyMode: $('input[name="studyMode"]:checked').val() || '',
+                    studyTime: $('#studyTime').val(),
+                    skillRange: $('#skillRange').val(),
+                    receiveInfo: $('#receiveInfo').prop('checked')
+                };
+                localStorage.setItem('courseFormDraft', JSON.stringify(formData));
+            }
+
+            // 6. LocalStorage 還原函式
+            function restoreFormData() {
+                let saved = localStorage.getItem('courseFormDraft');
+                if (!saved) return;
+                try {
+                    let data = JSON.parse(saved);
+                    if (data.memberName) $('#memberName').val(data.memberName);
+                    if (data.birthYear) $('#birthYear').val(data.birthYear);
+                    if (data.gender) {
+                        $(`input[name="gender"][value="${data.gender}"]`).prop('checked', true);
+                    }
+                    if (data.citySelect && cityLoadedFlag) {
+                        $('#citySelect').val(data.citySelect);
+                    }
+                    if (data.phone) $('#phone').val(data.phone);
+                    if (data.memberEmail) $('#memberEmail').val(data.memberEmail);
+                    if (data.channel) $('#channel').val(data.channel);
+                    if (data.motivation) $('#motivation').val(data.motivation);
+                    if (data.identityType) $('#identityType').val(data.identityType);
+                    
+                    if (data.courses && Array.isArray(data.courses)) {
+                        data.courses.forEach(c => {
+                            $(`.course-chk[value="${c}"]`).prop('checked', true);
+                        });
+                    }
+                    if (data.studyMode) {
+                        $(`input[name="studyMode"][value="${data.studyMode}"]`).prop('checked', true);
+                    }
+                    if (data.studyTime) $('#studyTime').val(data.studyTime);
+                    if (data.skillRange) {
+                        $('#skillRange').val(data.skillRange);
+                        $('#rangeValue').text(data.skillRange);
+                    }
+                    if (typeof data.receiveInfo === 'boolean') {
+                        $('#receiveInfo').prop('checked', data.receiveInfo);
+                    }
+                } catch(e) {
+                    console.error("還原暫存失敗:", e);
+                }
+            }
+
+            // 7. 表單提交事件與總驗證
+            $('#registrationForm').on('submit', function(e) {
+                e.preventDefault();
+
+                let isValid = true;
+
+                // 檢查姓名
+                let nameVal = $('#memberName').val().trim();
+                if (nameVal.length < 2 || nameVal.length > 8) {
+                    $('#memberName').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // 檢查出生年、縣市、管道、動機、上課時間
+                ['#birthYear', '#citySelect', '#channel', '#motivation', '#studyTime'].forEach(sel => {
+                    if (!$(sel).val()) {
+                        $(sel).addClass('is-invalid');
+                        isValid = false;
+                    }
+                });
+
+                // 檢查性別
+                if (!$('input[name="gender"]:checked').val()) {
+                    isValid = false;
+                }
+
+                // 檢查電話 (10碼)
+                let phoneVal = $('#phone').val();
+                let phoneRegex = /^09\d{8}$/;
+                if (!phoneRegex.test(phoneVal)) {
+                    $('#phone').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // 檢查 Email
+                let emailVal = $('#memberEmail').val();
+                let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailVal)) {
+                    $('#memberEmail').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // 檢查密碼 (8-16碼)
+                let pwdVal = $('#memberPassword').val();
+                if (pwdVal.length < 8 || pwdVal.length > 16) {
+                    $('#memberPassword').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // 檢查課程複選（至少選一項）
+                let selectedCourses = $('.course-chk:checked').map(function() { return this.value; }).get();
+                if (selectedCourses.length === 0) {
+                    $('#courseError').show();
+                    isValid = false;
+                } else {
+                    $('#courseError').hide();
+                }
+
+                // 檢查上課方式
+                if (!$('input[name="studyMode"]:checked').val()) {
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '填寫資料有誤或未完整',
+                        text: '請檢查紅框標示處的欄位與課程複選項目！',
+                        confirmButtonColor: '#52B788'
+                    });
+                    return;
+                }
+
+                // 驗證通過：顯示 SweetAlert 成功訊息並渲染下方預覽卡片
+                Swal.fire({
+                    icon: 'success',
+                    title: '報名表單驗證成功！',
+                    text: '以下為您的報名資料確認預覽',
+                    confirmButtonColor: '#52B788'
+                });
+
+                let maskedPassword = '*'.repeat(pwdVal.length);
+                let studyModeVal = $('input[name="studyMode"]:checked').val();
+                let genderVal = $('input[name="gender"]:checked').val();
+
+                let previewHtml = `
+                    <li class="list-group-item"><strong>姓名：</strong> ${nameVal}</li>
+                    <li class="list-group-item"><strong>出生年：</strong> ${$('#birthYear').val()} 年</li>
+                    <li class="list-group-item"><strong>性別：</strong> ${genderVal}</li>
+                    <li class="list-group-item"><strong>居住區：</strong> ${$('#citySelect').val()}</li>
+                    <li class="list-group-item"><strong>聯繫電話：</strong> ${phoneVal}</li>
+                    <li class="list-group-item"><strong>電子郵件：</strong> ${emailVal}</li>
+                    <li class="list-group-item"><strong>設定密碼：</strong> ${maskedPassword} （基於資安已遮罩）</li>
+                    <li class="list-group-item"><strong>參訓資訊來源：</strong> ${$('#channel').val()}</li>
+                    <li class="list-group-item"><strong>參訓動機：</strong> ${$('#motivation').val()}</li>
+                    <li class="list-group-item"><strong>身分別：</strong> ${$('#identityType').val() || '一般身分'}</li>
+                    <li class="list-group-item"><strong>期待學習課程：</strong> <span class="badge bg-success">${selectedCourses.join('</span> <span class="badge bg-success">')}</span></li>
+                    <li class="list-group-item"><strong>偏好上課方式：</strong> ${studyModeVal}</li>
+                    <li class="list-group-item"><strong>期待上課時間：</strong> ${$('#studyTime').val()}</li>
+                    <li class="list-group-item"><strong>程式能力自評：</strong> ${$('#skillRange').val()} 分</li>
+                    <li class="list-group-item"><strong>接收最新課程資訊：</strong> ${$('#receiveInfo').prop('checked') ? '是' : '否'}</li>
+                `;
+
+                $('#previewList').html(previewHtml);
+                $('#previewCard').fadeIn();
+
+                // 模擬報名成功後清除草稿（避免下次打開保留舊草稿）
+                localStorage.removeItem('courseFormDraft');
+
+                // 捲動至預覽區
+                $('html, body').animate({
+                    scrollTop: $('#previewCard').offset().top - 20
+                }, 500);
+            });
+
+            // 8. 重新填寫按鈕事件
+            $('#btnReset').on('click', function() {
+                Swal.fire({
+                    title: '確定要清除並重新填寫嗎？',
+                    text: '這將會清空目前所有輸入內容與暫存草稿。',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#52B788',
+                    confirmButtonText: '確定清除',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#registrationForm')[0].reset();
+                        $('.form-control, .form-select').removeClass('is-valid is-invalid');
+                        $('#courseError').hide();
+                        $('#previewCard').hide();
+                        localStorage.removeItem('courseFormDraft');
+                        $('#rangeValue').text('5');
+                        Swal.fire({
+                            icon: 'success',
+                            title: '已重設表單',
+                            confirmButtonColor: '#52B788'
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
